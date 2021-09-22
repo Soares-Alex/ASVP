@@ -1,0 +1,227 @@
+{% extends 'header.html' %}
+
+{% block title %}{% endblock %}
+{% block body %}
+
+<!--message de bienvenue-->
+<div>
+   <h3>Hi,{{current_user.Login}}!</h3>
+    <h4>Welcome to ASVP data entry</h4>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col md-12">
+
+            <div class=" ">
+
+
+                <h2>Insert <b>data</b>  <button type="button"  class="btn btn-success float-right"
+                data-toggle="modal" data-target="#mymodal">Add New Data</button> </h2>
+                <!--boucle pour les messages flash-->
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                {% for message in messages %}
+
+                <div class="alert alert-success alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                        <span aria-hidden="true">x</span>
+                    </button>
+                {{message}}
+                </div>
+
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+
+                <table class="table table-hover table-gray">
+
+                    <tr>
+                        <th>Catégorie</th>
+                        <th>Entrée</th>
+                        <th>Année</th>
+                        <th>Mois</th>
+                        <th>Totaux</th>
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                            <!--boucle pour presenter les donnees collectees dans la base-->
+                            {% for row in new_data.items%}
+                    <tr>
+
+                        <td>{{row.categorie}}</td>
+                        <td>{{row.entree}}</td>
+                        <td>{{row.annee}}</td>
+                        <td>{{row.mois}}</td>
+                        <td>{{row.totaux}}</td>
+                        <td>{{row.description}}</td>
+
+                        <td>
+                            <a href="/update/{{row.statistique_id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.statistique_id}}">Edit</a>
+                            <a href="/delete/{{row.statistique_id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+                        </td>
+
+                    </tr>
+
+
+                  <!-- edit area data -->
+                  <!-- fenetre pop-up pour l'edtion des donnees -->
+<div id="modaledit{{row.statistique_id}}" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+
+         <div class="modal-header">
+            <h4 class="modal-title">Update Data</h4>
+         </div>
+
+         <div class="modal-body">
+            <form action="{{url_for('update', statistique_id=row.statistique_id)}}" method="POST">
+
+               <div class="form-group">
+                  <label for="categorie">Catégorie:</label>
+                   <input type="hidden" class="form-control" name="statistique_id" value="{{row.statistique_id}}" >
+                   <input type="text" class="form-control" name="categorie"  id="categorie" value="{{row.categorie}}" >
+               </div>
+
+               <div class="form-group">
+                  <label for="entree" >Entrée:</label>
+                  <input type="text" class="form-control" name="entree"  id="entree" value="{{row.entree}}" >
+               </div>
+
+               <div class="form-group">
+                  <label for="annee">Année:</label>
+                  <input type="text" class="form-control" name="annee" id="annee" value="{{row.annee}}" >
+               </div>
+
+                <div class="form-group">
+                  <label for="mois">Mois:</label>
+                  <input type="text" class="form-control" name="mois" id="mois" value="{{row.mois}}" >
+               </div>
+
+                <div class="form-group">
+                  <label for="totaux">Totaux:</label>
+                  <input type="text" class="form-control" name="totaux" id="totaux" value="{{row.totaux}}" >
+               </div>
+
+                <div class="form-group">
+                  <label for="description">Description:</label>
+                  <input type="text" class="form-control" name="description" id="description" value="{{row.description}}">
+               </div>
+
+               <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Update</button>
+               </div>
+            </form>
+         </div>
+         
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         </div>
+
+
+      </div>
+   </div>
+</div>
+
+                    {% endfor %}
+
+                </table>
+            </div>
+                  <!-- insert data into a database-->
+                  <!--table pour collect des donnees -->
+
+<div id="mymodal" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+
+      <div class="modal-content">
+               <div class="modal-header">
+                  <h4 class="modal-title">Add Data</h4>
+               </div>
+         <div class="modal-body">
+
+            <form action="{{url_for('insert')}}" method="POST">
+
+               <div class="form-group">
+                  <label>Catégorie:</label>
+                  <input type="text" class="form-control" name="categorie"  required="1">
+               </div>
+
+               <div class="form-group">
+                  <label>Entrée:</label>
+                  <input type="text" class="form-control" name="entree">
+
+               </div>
+                <div class="form-group">
+                  <label>Année:</label>
+                  <input type="text" class="form-control"  name="annee">
+               </div>
+
+                <div class="form-group">
+                  <label>Mois:</label>
+                  <input type="text" class="form-control"  name="mois">
+               </div>
+
+                <div class="form-group">
+                  <label>Totaux:</label>
+                  <input type="text" class="form-control"  name="totaux">
+
+               </div>
+                <div class="form-group">
+                  <label>Description:</label>
+                  <input type="text" class="form-control" name="description">
+               </div>
+
+               <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Add Data</button>
+               </div>
+
+            </form>
+         </div>
+
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         </div>
+
+      </div>
+   </div>
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Pagination -->
+<div class="text-right">
+    <a href="{{ url_for('index', page=new_data.prev_num) }}"
+       class="btn btn-outline-dark
+       {% if new_data.page == 1 %}disabled{% endif %}">
+        &laquo;
+    </a><!-- Loop through the number of pages to display a link for each-->
+    {% for page_num in new_data.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}{% if page_num %}
+<!-- Check for the active page and set the link to "Active"-->
+            {% if new_data.page == page_num %}
+            <a href="{{ url_for('index', page=page_num) }}"
+               class="btn btn-dark">
+                {{ page_num }}
+            </a>
+            {% else %}
+            <a href="{{ url_for('index', page=page_num) }}"
+               class="btn btn-outline-dark">
+                {{ page_num }}
+            </a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}    <a href="{{ url_for('index', page=new_data.next_num) }}"
+       class="btn btn-outline-dark
+       {% if new_data.page == new_data.pages %}disabled{% endif %}">
+        &raquo;
+    </a>
+</div>
+<p class="text-right mt-3">
+   Showing page {{ new_data.page }} of {{ new_data.pages }}
+</p>
+
+{% endblock %}

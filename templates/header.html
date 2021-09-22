@@ -1,0 +1,78 @@
+{% include 'partials/base.html' %}
+
+<title>ASVP{% block title %}{% endblock %}</title>
+
+<div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="{{ url_for('index') }}">ASVP</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+         {% if not current_user.is_authenticated %}
+      <li class="nav-item active">
+        <a class="nav-link" href="{{ url_for('inscription') }}">Register<span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('connexion') }}">Login</a>
+      </li>
+          {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url_for('deconnexion') }}">Logout</a>
+      </li>
+          {%endif%}
+
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"  data-bs-toggle="dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Explorer</a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Catégorie </a>
+          <ul class="dropdown" aria-labelledby="navbarDropdown">
+
+               <li><a class="dropdown-item" href="{{ url_for('index_femmes') }}">Femmes</a></li>
+               <li><a class="dropdown-item" href="{{ url_for('index_hommes') }}">Hommes</a></li>
+               <li><a class="dropdown-item" href="{{ url_for('index_enfants') }}">Enfants des écoles</a></li>
+               <li><a class="dropdown-item" href="{{ url_for('index_militaires') }}">Militaires</a></li>
+               <li><a class="dropdown-item" href="{{ url_for('index_lycees') }}">Lycées, sociétés postscolaires et patronages </a></li>
+               <li><a class="dropdown-item" href="{{ url_for('index_societes') }}">Sociétés sportives</a></li>
+               <li><a class="dropdown-item" href="{{ url_for('index_totaux') }}">Totaux</a></li>
+
+            </ul>
+
+
+          <a class="dropdown-item" href="#"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Année</a>
+          <ul class="dropdown" aria-labelledby="navbarDropdown">
+
+               <li><a class="dropdown-item" href="{{ url_for('index_1937') }}">1937 </a></li>
+               <li><a class="dropdown-item" href="{{ url_for('index_1935') }}">1935</a></li>
+               <li><a class="dropdown-item" href="{{ url_for('index_1936') }}">1936</a></li>
+          </ul>
+              <a class="dropdown-item" href="{{ url_for('about_app') }}">About the app</a>
+        </div>
+
+      </li>
+    </ul>
+
+
+
+    <form action="{{ url_for('search') }}" class="form-inline my-2 my-lg-0" method="GET" >
+      <input class="form-control mr-sm-2" type="search" name="keyword" placeholder="Search" aria-label="Search">
+      <button  class="btn btn-outline-success my-2 my-sm-0 float-right" type="submit">Search</button>
+    </form>
+  </div>
+
+
+</nav>
+
+  <div class="container" >
+    <div class="row">
+      <div class="col">
+      {% block body%} {% endblock%}
+      </div>
+    </div>
+  </div>
+
+</div>

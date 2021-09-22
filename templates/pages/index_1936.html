@@ -1,0 +1,109 @@
+{% include "header.html" %}
+
+{% block title%} {% endblock%}
+
+{% block body %}
+                            <h3 style="text-align:center">Your search provides this as result</h3>
+      {% if index_36 %}
+             <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <table class="table table-hover table-gray">
+                             <tr>
+                                    <th>Catégorie</th>
+                                    <th>Entrée</th>
+                                    <th>Année</th>
+                                    <th>Mois</th>
+                                    <th>Totaux</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                             </tr>
+                           {% for line in index_36%}
+                            <tr>
+                                    <td>{{line.categorie}}</td>
+                                    <td>{{line.entree}}</td>
+                                    <td>{{line.annee}}</td>
+                                    <td>{{line.mois}}</td>
+                                    <td>{{line.totaux}}</td>
+                                    <td>{{line.description}}</td>
+
+
+                                    <td>
+                                        <a href="/update/{{line.statistique_id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{line.statistique_id}}">Edit</a>
+                                        <a href="/delete/{{line.statistique_id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Delete ?')">Delete</a>
+                                    </td>
+                                </tr>
+
+
+
+                                <!-- edit area data -->
+                  <!-- fenetre pop-up pour l'edtion des donnees -->
+<div id="modaledit{{line.statistique_id}}" class="modal fade" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+
+         <div class="modal-header">
+            <h4 class="modal-title">Update Data</h4>
+         </div>
+
+         <div class="modal-body">
+            <form action="{{url_for('update', statistique_id=line.statistique_id)}}" method="POST">
+
+               <div class="form-group">
+                  <label for="categorie">Catégorie:</label>
+                   <input type="hidden" class="form-control" name="statistique_id" value="{{line.statistique_id}}" >
+                   <input type="text" class="form-control" name="categorie"  id="categorie" value="{{line.categorie}}" >
+               </div>
+
+               <div class="form-group">
+                  <label for="entree" >Entrée:</label>
+                  <input type="text" class="form-control" name="entree"  id="entree" value="{{line.entree}}" >
+               </div>
+
+               <div class="form-group">
+                  <label for="annee">Année:</label>
+                  <input type="text" class="form-control" name="annee" id="annee" value="{{line.annee}}" >
+               </div>
+
+                <div class="form-group">
+                  <label for="mois">Mois:</label>
+                  <input type="text" class="form-control" name="mois" id="mois" value="{{line.mois}}" >
+               </div>
+
+                <div class="form-group">
+                  <label for="totaux">Totaux:</label>
+                  <input type="text" class="form-control" name="totaux" id="totaux" value="{{line.totaux}}" >
+               </div>
+
+                <div class="form-group">
+                  <label for="description">Description:</label>
+                  <input type="text" class="form-control" name="description" id="description" value="{{line.description}}">
+               </div>
+
+               <div class="form-group">
+                  <button class="btn btn-primary" type="submit">Update</button>
+               </div>
+            </form>
+         </div>
+
+         <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         </div>
+
+
+      </div>
+   </div>
+</div>
+
+                    {% endfor %}
+
+                </table>
+
+
+
+                        {%endif%}
+         </div>
+   </div>
+</div>
+
+{% endblock %}

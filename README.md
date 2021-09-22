@@ -31,7 +31,7 @@ L'application permet de consulter les données collectées d'Annuaire Statistiqu
 
 #### futher information
 
-send me out a smoke signal, i will be happy to help :)
+send me out a smoke signal, i will be happy to help you out :)
 
 
 

@@ -1,6 +1,6 @@
 # ASVP
 
-Annuaire Statistique de la Ville de Paris est une application développée avec le langage Python3 et le framework Flask et s'appuie sur une base de données. Elle utilise également Bootstrap pour la mise en forme graphique. Ce projet est l'aboutissement de cours de Monsieur Thibault Clérice, responsable pédagogique du master Technologies Numériques Appliquées à l'Histoire, de l'Ecole Nationale des Chartes, ainsi que plusieurs recherches sur l'internet.
+Annuaire Statistique de la Ville de Paris est une application développée avec le langage Python3 et le framework Flask et s'appuie sur une base de données relationnelle. Elle utilise également Bootstrap pour la mise en forme graphique. Ce projet est l'aboutissement de cours de Monsieur Thibault Clérice, responsable pédagogique du master Technologies Numériques Appliquées à l'Histoire, de l'Ecole Nationale des Chartes, ainsi que plusieurs recherches sur l'internet.
 
 
 ## Description
